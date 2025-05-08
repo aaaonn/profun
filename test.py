@@ -34,6 +34,7 @@ canvas.create_arc(200, 280, 300, 340, start=0, extent=-180, style="arc", width=3
 # ซ้าย
 canvas.create_line(170, 190, 230, 180, width=4)
 canvas.create_line(170, 185, 230, 175, width=4)
+canvas.create_line(150, 185, 230, 175, width=4)
 # ขวา
 canvas.create_line(270, 180, 310, 190, width=4)
 canvas.create_line(270, 175, 310, 185, width=4)
