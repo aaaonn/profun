@@ -2,25 +2,119 @@ import random
 from tkinter import HIDDEN, NORMAL, Tk, Canvas, Button, Frame, Label
 
 root = Tk()
-root.title("Keroro Face")
+root.title("Patrick V2")
 c = Canvas(root, width=500, height=500, bg='#20C5E1')
 c.pack()
 c.check =True
+c.body_color = "#FA9AA3"
 # ================================= Function ต่างๆ ========================================
+# ===== กระพริบตา =====
+def toggle_eyes():
+    current_color = c.itemcget(eye_left, 'fill')
+    new_color = c.body_color if current_color == 'white' else 'white'
+    current_state = c.itemcget(pupil_left, 'state')
+    new_state = NORMAL if current_state == HIDDEN else HIDDEN
+    c.itemconfigure(pupil_left, state=new_state)
+    c.itemconfigure(pupil_left1, state=new_state)
+    c.itemconfigure(pupil_right, state=new_state)
+    c.itemconfigure(pupil_right1, state=new_state)
+    c.itemconfigure(eye_left, fill=new_color)
+    c.itemconfigure(eye_right, fill=new_color)
 
+def blink():
+    toggle_eyes()
+    root.after(250, toggle_eyes)
+    root.after(2500, blink)
+
+# ===== ดีใจ (เอาเม้าเข้า) =====
+def show_happy(event):
+    if (200 <= event.x and event.x <= 300) and (50 <= event.y and event.y <= 220) :
+        c.itemconfigure(devil_smile, state=NORMAL)
+        c.itemconfigure(eyebrow_devil_left1, state=NORMAL)
+        c.itemconfigure(eyebrow_devil_left2, state=NORMAL)
+        c.itemconfigure(eyebrow_devil_right1, state=NORMAL)
+        c.itemconfigure(eyebrow_devil_right2, state=NORMAL)
+
+        c.itemconfigure(eyebrow_left1, state=HIDDEN)
+        c.itemconfigure(eyebrow_left2, state=HIDDEN)
+        c.itemconfigure(eyebrow_right1, state=HIDDEN)
+        c.itemconfigure(eyebrow_right2, state=HIDDEN)
+        c.itemconfigure(normal_smile, state=HIDDEN)
+        c.itemconfigure(normal_smile1, state=HIDDEN)
+        c.itemconfigure(sad_smile, state=HIDDEN)
+        c.itemconfigure(sad_smile_left1, state=HIDDEN)
+        c.itemconfigure(sad_smile_left2, state=HIDDEN)
+        c.itemconfigure(sad_smile_right1, state=HIDDEN)
+        c.itemconfigure(sad_smile_right2, state=HIDDEN)
+
+        c.itemconfigure(eyebrow_sad_left1, state=HIDDEN)
+        c.itemconfigure(eyebrow_sad_left2, state=HIDDEN)
+        c.itemconfigure(eyebrow_sad_right1, state=HIDDEN)
+        c.itemconfigure(eyebrow_sad_right2, state=HIDDEN)
+
+        c.itemconfigure(tear_left, state=HIDDEN)
+        c.itemconfigure(tear_right, state=HIDDEN)
+        c.happy_level = 6
+    return
+
+# ===== ซ่อนดีใจ (เอาเม้าออก) =====
+def hide_happy(event):
+    c.itemconfigure(devil_smile, state=HIDDEN)
+    c.itemconfigure(eyebrow_devil_left1, state=HIDDEN)
+    c.itemconfigure(eyebrow_devil_left2, state=HIDDEN)
+    c.itemconfigure(eyebrow_devil_right1, state=HIDDEN)
+    c.itemconfigure(eyebrow_devil_right2, state=HIDDEN)
+
+    c.itemconfigure(eyebrow_left1, state=NORMAL)
+    c.itemconfigure(eyebrow_left2, state=NORMAL)
+    c.itemconfigure(eyebrow_right1, state=NORMAL)
+    c.itemconfigure(eyebrow_right2, state=NORMAL)
+    c.itemconfigure(normal_smile, state=NORMAL) 
+    c.itemconfigure(normal_smile1, state=NORMAL)
+
+    c.itemconfigure(sad_smile, state=HIDDEN)
+    c.itemconfigure(sad_smile_left1, state=HIDDEN)
+    c.itemconfigure(sad_smile_left2, state=HIDDEN)
+    c.itemconfigure(sad_smile_right1, state=HIDDEN)
+    c.itemconfigure(sad_smile_right2, state=HIDDEN)
+    
+    return
+
+# ===== เศร้า =====
+def sad():
+    if c.happy_level == 0:
+        c.itemconfigure(normal_smile, state=HIDDEN)
+        c.itemconfigure(normal_smile1, state=HIDDEN)
+        c.itemconfigure(eyebrow_left1, state=HIDDEN)
+        c.itemconfigure(eyebrow_left2, state=HIDDEN)
+        c.itemconfigure(eyebrow_right1, state=HIDDEN)
+        c.itemconfigure(eyebrow_right2, state=HIDDEN)
+
+        c.itemconfigure(sad_smile, state=NORMAL)
+        c.itemconfigure(sad_smile_left1, state=NORMAL)
+        c.itemconfigure(sad_smile_left2, state=NORMAL)
+        c.itemconfigure(sad_smile_right1, state=NORMAL)
+        c.itemconfigure(sad_smile_right2, state=NORMAL)
+        c.itemconfigure(eyebrow_sad_left1, state=NORMAL)
+        c.itemconfigure(eyebrow_sad_left2, state=NORMAL)
+        c.itemconfigure(eyebrow_sad_right1, state=NORMAL)
+        c.itemconfigure(eyebrow_sad_right2, state=NORMAL)
+
+        c.itemconfigure(tear_left, state=NORMAL)
+        c.itemconfigure(tear_right, state=NORMAL)
+    else:
+        c.happy_level -= 2
+    root.after(5000, sad)
 
 # ================================= Background ========================================
 # ===== ชั้นบรรยากาศชั้นกลาง =====
 c.create_polygon(
     0,500,#ตั้งแต่ข้างซ้ายล่าง
     0,500,
-
     0,100,#มุมซ้ายบน
     0,100,
-
     500,100,#มุมขวาบน
     500,100,
-
     500,500,#ตั้งแต่ข้างขวาล่าง
     500,500,
     fill="#10ADDE", smooth = 1,outline="#10ADDE"#17B6DE
@@ -322,46 +416,66 @@ c.create_polygon(
 
     fill="#AF90C4", smooth = 1,outline="#757AB3", width=2
 )
-# ================================= Eyes ========================================
+# ================================= Eyes ===============================================
+# ================ Normal Eyes ================ 
 # ===== Eye Left =====
-c.create_oval(
+eye_left = c.create_oval(
     210,130,240,170,
-    #250,130,280,170,
-
     fill="white", outline="black", width=2
 )
-# ===== Eye Left Ball =====
-c.create_oval(
+# ===== Eye Left puppil =====
+pupil_left = c.create_oval(
     220,142,230,158,
-
     fill="black", outline="black"
 )
-c.create_oval(
+pupil_left1 = c.create_oval(
     224,144,228,150,
     fill="white"
 )
 
-
 # ===== Eye Right =====
-c.create_oval(
+eye_right = c.create_oval(
     240,130,270,170,
-
     fill="white", outline="black", width=2
 )
-# ===== Eye Right Ball =====
-c.create_oval(
+# ===== Eye Right puppil =====
+pupil_right = c.create_oval(
     250,142,260,158,
-
     fill="black", outline="black"
 )
-c.create_oval(
+pupil_right1 = c.create_oval(
     254,144,258,150,
     fill="white"
 )
+# ================ Sad Eyes ================  state=HIDDEN
+# ===== Eye Left =====
+tear_left = c.create_polygon(
+    212,155,212,160,222,170,230,170,238,160,238,160,
+    fill="#8aadea", smooth = 1, state=HIDDEN
+)
+# ===== Eye Right =====
+tear_right = c.create_polygon(
+    242,160,242,160,252,170,260,170,269,160,269,155,
+    fill="#8aadea", smooth = 1, state=HIDDEN
+)
 
+# ================================= Mouth ===============================================
+# ================ Normal Smile ================
+normal_smile = c.create_line(
+    215,210,
+    240,230,
+    270,190,
+    fill="black", smooth = 1, width=2,capstyle='round' ,
+)
+normal_smile1 = c.create_line(
+    265,185,
+    270,190,
+    275,190,
 
-# ===== Smile =====
-c.create_polygon(
+    fill="black", smooth = 1, width=2,capstyle='round' , 
+)
+# ================ Devil Smile ================ state = HIDDEN
+devil_smile = c.create_polygon(
     210,180,
     206,178,
 
@@ -372,31 +486,103 @@ c.create_polygon(
 
     240,230,
 
-    fill="#6A0503", smooth = 1,outline="black", width=2
+    fill="#6A0503", smooth = 1,outline="black", width=2, state = HIDDEN
+)
+# ================ Sad Smile ================ state=HIDDEN
+sad_smile = c.create_line(
+    210,210,    #Start 
+
+    210,200,
+
+    225,205,
+                    #240,180,    #Middle
+    230,190,
+
+    240,200,    #middle
+
+    250,190,
+
+    260,205,
+
+    270,200,    #End
+    275,210,
+
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
+)
+sad_smile_left1 = c.create_line(
+    214,180,208,185,203,200,
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
+)
+sad_smile_right1 = c.create_line(
+    270,178,278,185,280,200,
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
 )
 
-# ===== คิ้วซ้าย =====
-c.create_line(
-    215,104,237,114,width=3
+sad_smile_left2 = c.create_line(
+    205,205,200,220,215,212,
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
 )
-c.create_line(
-    215,108,237,118,width=3
+sad_smile_right2 = c.create_line(
+    275,200,290,222,265,213,
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
+)
+
+
+# ================================= คิ้ว ===============================================
+# ================ คิ้วแบบปกติ ================
+# ===== คิ้วซ้าย =====
+eyebrow_left1 = c.create_line(
+    215,108,237,104,width=3
+)
+eyebrow_left2 = c.create_line(
+    215,112,237,108,width=3
 )
 # ===== คิ้วขวา =====
-c.create_line(
-    245,114,267,104,width=3
+eyebrow_right1 = c.create_line(
+    245,104,267,108,width=3
 )
-c.create_line(
-    245,118,267,108,width=3
+eyebrow_right2 = c.create_line(
+    245,108,267,112,width=3
+)
+
+# ================ คิ้วแบบโกรธ ================  , state=HIDDEN
+# ===== คิ้วซ้าย =====
+eyebrow_devil_left1 = c.create_line(
+    215,104,237,114,width=3 , state=HIDDEN
+)
+eyebrow_devil_left2 = c.create_line(
+    215,108,237,118,width=3 , state=HIDDEN
+)
+# ===== คิ้วขวา =====
+eyebrow_devil_right1 = c.create_line(
+    245,114,267,104,width=3 , state=HIDDEN
+)
+eyebrow_devil_right2 = c.create_line(
+    245,118,267,108,width=3 , state=HIDDEN
+)
+
+# ================ คิ้วแบบเศร้า ================ state=HIDDEN
+# ===== คิ้วซ้าย =====
+eyebrow_sad_left1 = c.create_line(
+    215,124,237,114,width=3 , state=HIDDEN
+)
+eyebrow_sad_left2 = c.create_line(
+    215,128,237,118,width=3 , state=HIDDEN
+)
+# ===== คิ้วขวา =====
+eyebrow_sad_right1 = c.create_line(
+    245,114,267,124,width=3 , state=HIDDEN
+)
+eyebrow_sad_right2 = c.create_line(
+    245,118,267,128,width=3 , state=HIDDEN
 )
 
 
 
 
+# ================================= Grid ===============================================
 
-# ================================= Grid ========================================
-
-"""# ===== Grid =====
+""# ===== Grid =====
 grid_size = 20  # ความถี่ของเส้นแบ่ง (10 พิกเซล)
 for x in range(0, 501, grid_size):                   # วาดเส้นแนวตั้ง (แกน Y)
     c.create_line(x, 0, x, 500, fill="#383838")
@@ -419,7 +605,15 @@ for y in range(0, 501, 50):
 
 for y in range(0, 501, 100):
     c.create_line(0, y, 500, y, fill="blue")
-"""
+""
 
+c.bind('<Motion>', show_happy)
+c.bind('<Leave>', hide_happy)
 
+c.happy_level = 6
+c.eyes_crossed = False
+c.tongue_out = False
+
+root.after(1000, blink)
+root.after(5000, sad)
 root.mainloop()

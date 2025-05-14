@@ -352,45 +352,35 @@ pupil_right1 = c.create_oval(
     254,144,258,150,
     fill="white"
 )
-# ================ Sad Eyes ================ 
+# ================ Sad Eyes ================  state=HIDDEN
 # ===== Eye Left =====
-c.create_polygon(
-    212,155,
-    212,160,
-    222,170,
-    230,170,
-    238,160,
-    238,160,
-    fill="#8aadea", smooth = 1,
+tear_left = c.create_polygon(
+    212,155,212,160,222,170,230,170,238,160,238,160,
+    fill="#8aadea", smooth = 1, state=HIDDEN
 )
 # ===== Eye Right =====
-c.create_polygon(
-    242,160,
-    242,160,
-    252,170,
-    260,170,
-    269,160,
-    269,155,
-    fill="#8aadea", smooth = 1,
+tear_right = c.create_polygon(
+    242,160,242,160,252,170,260,170,269,160,269,155,
+    fill="#8aadea", smooth = 1, state=HIDDEN
 )
 
 # ================================= Mouth ===============================================
-# ================ Normal Smile ================ state = HIDDEN
+# ================ Normal Smile ================
 c.create_line(
     215,210,
     240,230,
     270,190,
-    fill="black", smooth = 1, width=2,capstyle='round' , state = HIDDEN
+    fill="black", smooth = 1, width=2,capstyle='round' ,
 )
 c.create_line(
     265,185,
     270,190,
     275,190,
 
-    fill="black", smooth = 1, width=2,capstyle='round' , state = HIDDEN
+    fill="black", smooth = 1, width=2,capstyle='round' , 
 )
 # ================ Devil Smile ================ state = HIDDEN
-Devil_Smile = c.create_polygon(
+devil_smile = c.create_polygon(
     210,180,
     206,178,
 
@@ -403,8 +393,8 @@ Devil_Smile = c.create_polygon(
 
     fill="#6A0503", smooth = 1,outline="black", width=2, state = HIDDEN
 )
-# ================ Sad Smile ================ 
-Sad_Smile = c.create_line(
+# ================ Sad Smile ================ state=HIDDEN
+sad_smile = c.create_line(
     210,210,    #Start 
 
     210,200,
@@ -422,29 +412,29 @@ Sad_Smile = c.create_line(
     270,200,    #End
     275,210,
 
-    fill="black", smooth = 1, width=2,capstyle='round', #state = HIDDEN
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
 )
-Sad_Smile_Left1 = c.create_line(
+sad_smile_left1 = c.create_line(
     214,180,208,185,203,200,
-    fill="black", smooth = 1, width=2,capstyle='round', #state = HIDDEN
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
 )
-Sad_Smile_Right1 = c.create_line(
+sad_smile_right1 = c.create_line(
     270,178,278,185,280,200,
-    fill="black", smooth = 1, width=2,capstyle='round', #state = HIDDEN
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
 )
 
-Sad_Smile_Left2 = c.create_line(
+sad_smile_left2 = c.create_line(
     205,205,200,220,215,212,
-    fill="black", smooth = 1, width=2,capstyle='round', #state = HIDDEN
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
 )
-Sad_Smile_Right2 = c.create_line(
+sad_smile_right2 = c.create_line(
     275,200,290,222,265,213,
-    fill="black", smooth = 1, width=2,capstyle='round', #state = HIDDEN
+    fill="black", smooth = 1, width=2,capstyle='round', state = HIDDEN
 )
 
 
 # ================================= คิ้ว ===============================================
-"""# ================ คิ้วแบบปกติ ================
+# ================ คิ้วแบบปกติ ================
 # ===== คิ้วซ้าย =====
 c.create_line(
     215,108,237,104,width=3
@@ -459,7 +449,7 @@ c.create_line(
 c.create_line(
     245,108,267,112,width=3
 )
-"""
+
 """# ================ คิ้วแบบโกรธ ================
 # ===== คิ้วซ้าย =====
 c.create_line(
@@ -476,25 +466,43 @@ c.create_line(
     245,118,267,108,width=3
 )"""
 
-# ================ คิ้วแบบเศร้า ================
+# ================ คิ้วแบบเศร้า ================ state=HIDDEN
 # ===== คิ้วซ้าย =====
 c.create_line(
-    215,124,237,114,width=3
+    215,124,237,114,width=3 , state=HIDDEN
 )
 c.create_line(
-    215,128,237,118,width=3
+    215,128,237,118,width=3 , state=HIDDEN
 )
 # ===== คิ้วขวา =====
 c.create_line(
-    245,114,267,124,width=3
+    245,114,267,124,width=3 , state=HIDDEN
 )
 c.create_line(
-    245,118,267,128,width=3
+    245,118,267,128,width=3 , state=HIDDEN
 )
 
 
 # ================================= Function ต่างๆ ========================================
-"""# ===== กระพริบตา =====
+#ปิดดวงตา
+def eyes_close():
+    c.itemconfigure(eye_left, state=HIDDEN)
+    c.itemconfigure(pupil_left, state=HIDDEN)
+    c.itemconfigure(pupil_left1, state=HIDDEN)
+    c.itemconfigure(eye_right, state=HIDDEN)
+    c.itemconfigure(pupil_right, state=HIDDEN)
+    c.itemconfigure(pupil_right1, state=HIDDEN)
+    
+#เปิดดวงตา
+def eyes_open():
+    c.itemconfigure(eye_left, state=NORMAL)
+    c.itemconfigure(pupil_left, state=NORMAL)
+    c.itemconfigure(pupil_left1, state=NORMAL)
+    c.itemconfigure(eye_right, state=NORMAL)
+    c.itemconfigure(pupil_right, state=NORMAL)
+    c.itemconfigure(pupil_right1, state=NORMAL)
+
+# ===== กระพริบตา =====
 def toggle_eyes():
     current_color = c.itemcget(eye_left, 'fill')
     new_color = c.body_color if current_color == 'white' else 'white'
@@ -506,25 +514,65 @@ def toggle_eyes():
     c.itemconfigure(pupil_right1, state=new_state)
     c.itemconfigure(eye_left, fill=new_color)
     c.itemconfigure(eye_right, fill=new_color)
+    close_tear()
 
 def blink():
     toggle_eyes()
     root.after(250, toggle_eyes)
     root.after(2500, blink) #ทุกๆ 2.5 วิ
-"""
+
+
+"""#กระพริบตา
+def toggle_eyes():
+    current_state = c.itemcget(eye_left, 'state')
+    new_state1 = NORMAL if current_state == HIDDEN else HIDDEN
+    c.itemconfigure(eye_left, state=new_state1)
+    c.itemconfigure(pupil_left, state=new_state1)
+    c.itemconfigure(pupil_left1, state=new_state1)
+    c.itemconfigure(eye_right, state=new_state1)
+    c.itemconfigure(pupil_right, state=new_state1)
+    c.itemconfigure(pupil_right1, state=new_state1)
+    new_state = NORMAL if current_state != HIDDEN else HIDDEN
+    c.itemconfigure(eye_left, state=new_state)
+    #c.itemconfigure(eyelid_left, state=new_state)
+    #c.itemconfigure(eyelash_left1, state=new_state)
+    #c.itemconfigure(eyelash_left2, state=new_state)
+    c.itemconfigure(eye_right, state=new_state)
+    #c.itemconfigure(eyelid_right, state=new_state)
+    #c.itemconfigure(eyelash_right1, state=new_state)
+    #c.itemconfigure(eyelash_right2, state=new_state)
+    close_tear()"""
+
+#กระพริบตา ทุกๆ 2.5 วิ
+def blink():
+    global blink_id, blink_cycle
+    toggle_eyes()
+    blink_id = root.after(250, toggle_eyes)
+    blink_cycle = root.after(2500, blink)
+
+#หยุดการทำงาน กระพริบตา
+def stop_blinking():
+    if 'blink_id' in globals():
+        root.after_cancel(blink_id)
+    if 'blink_cycle' in globals():
+        root.after_cancel(blink_cycle)
+
+#เปิดการทำงาน กระพริบตา      
+def start_blinking():
+    global blink_cycle
+    blink_cycle = root.after(2500, blink)
+
 #แสดงหน้า Cry
 def Cry():
     if not c.eyes_crossed:
         eyes_close()
-        c.itemconfigure(heart_left, state=HIDDEN)
-        c.itemconfigure(heart_right, state=HIDDEN)
-        c.itemconfigure(eye_left_new, state=HIDDEN)
-        c.itemconfigure(eye_right_new, state=HIDDEN)
+        c.itemconfigure(eye_left, state=HIDDEN)
+        c.itemconfigure(eye_right, state=HIDDEN)
         c.itemconfigure(eye_left_new2, state=NORMAL)
         c.itemconfigure(eye_right_new2, state=NORMAL)
         c.itemconfigure(eye_left_new3, state=HIDDEN)
         c.itemconfigure(eye_right_new3, state=HIDDEN)
-        hide_happy(None)
+        #hide_happy(None)
         c.itemconfigure(mouth_normal, state=HIDDEN)
         c.itemconfigure(mouth_cry, state=NORMAL)
         c.itemconfigure(tear_left, state=NORMAL)
@@ -532,29 +580,20 @@ def Cry():
         c.eyes_crossed = True
     else:
         eyes_open()
-        c.itemconfigure(heart_left, state=HIDDEN)
-        c.itemconfigure(heart_right, state=HIDDEN)
         c.itemconfigure(eye_left_new, state=HIDDEN)
         c.itemconfigure(eye_right_new, state=HIDDEN)
         c.itemconfigure(eye_left_new2, state=HIDDEN)
         c.itemconfigure(eye_right_new2, state=HIDDEN)
         c.itemconfigure(eye_left_new3, state=HIDDEN)
         c.itemconfigure(eye_right_new3, state=HIDDEN)
-        hide_happy(None)
+        #hide_happy(None)
         close_tear()
         c.eyes_crossed = False
 
-# ================================= สร้างปุ่ม ===============================================
-button_frame2 = Frame(root)
-button_frame2.pack(side="bottom")
-button_frame = Frame(root)
-button_frame.pack(side="bottom")
-
-#button1 = Button(button_frame, text="ANGRY", command=on_Love_click,bg="pink", fg="black",bd=3,padx=25, pady=10, font=("Arial Rounded MT Bold", 12, "bold"))
-#button1.pack(side="left", padx=15, pady=5)
-button2 = Button(button_frame, text="CRY", command=on_Cry_click,bg="pink", fg="black",bd=3,padx=30, pady=10, font=("Arial Rounded MT Bold", 12, "bold"))
-button2.pack(side="right", padx=15, pady=5)
-
+#ปิดน้ำตา
+def close_tear():
+    c.itemconfigure(tear_left, state=HIDDEN)
+    c.itemconfigure(tear_right, state=HIDDEN)
 
 #กดปุ่ม CRY จะแสดงหน้า CRY เป็นเวลา 1 วินาที
 def on_Cry_click():
@@ -565,11 +604,12 @@ def on_Cry_click():
         root.after(1000, Cry)
         start_blinking()
     return
+
 #ตรวจสอบว่ามีการแสดงอารมณ์ต่างๆ
 def check_state():
-    current_state1 = c.itemcget(mouth_cry, 'state')
+    current_state1 = c.itemcget(sad_smile, 'state') 
     #current_state2 = c.itemcget(mouth_love1, 'state')
-    current_state3 = c.itemcget(mouth_angry, 'state')
+    current_state3 = c.itemcget(devil_smile, 'state')
     #current_state4 = c.itemcget(tongue_main, 'state')
     if current_state1 == HIDDEN and current_state3 == HIDDEN :
         c.check = True
@@ -577,6 +617,23 @@ def check_state():
         c.check = False
         
     return
+        
+
+# ================================= สร้างปุ่ม ===============================================
+button_frame2 = Frame(root)
+button_frame2.pack(side="bottom")
+button_frame = Frame(root)
+button_frame.pack(side="left")
+
+#button1 = Button(button_frame, text="ANGRY", command=on_Love_click,bg="pink", fg="black",bd=3,padx=25, pady=10, font=("Arial Rounded MT Bold", 12, "bold"))
+#button1.pack(side="left", padx=15, pady=5)
+button2 = Button(button_frame, text="CRY", command=on_Cry_click,bg="pink", 
+    fg="black",bd=3,padx=30, pady=10, font=("Arial Rounded MT Bold", 12, "bold"))
+button2.pack(side="left", padx=15, pady=5)
+
+
+
+
 
 # ================================= Grid ===============================================
 
@@ -605,5 +662,7 @@ for y in range(0, 501, 100):
     c.create_line(0, y, 500, y, fill="blue")
 ""
 
-#root.after(1000, blink)
+
+c.eyes_crossed = False
+root.after(1000, blink)
 root.mainloop()
