@@ -120,6 +120,8 @@ for x in range(0, 501, grid_size):                   # วาดเส้นแ�
 
 for x in range(0, 501, 50):     #ทุกๆ 50
     c.create_line(x, 0, x, 500, fill="red")
+    c.create_text(x + 2, 6, text=str(x), anchor="nw", font=("Arial", 10,"bold"), fill="purple")
+    c.create_text(x + 2, 500 - 15, text=str(x), anchor="nw", font=("Arial", 10,"bold"), fill="purple")
 
 for x in range(0, 501, 100):     #ทุกๆ 100
     c.create_line(x, 0, x, 500, fill="blue")
@@ -129,6 +131,8 @@ for y in range(0, 501, grid_size):                  # วาดเส้นแ�
 
 for y in range(0, 501, 50):
     c.create_line(0, y, 500, y, fill="red")
+    c.create_text(5, y + 2, text=str(y), anchor="nw", font=("Arial Rounded MT", 10,"bold"), fill="black")
+    c.create_text(500 - 25, y + 2, text=str(y), anchor="nw", font=("Arial", 10,"bold"), fill="black")
 
 for y in range(0, 501, 100):
     c.create_line(0, y, 500, y, fill="blue")
