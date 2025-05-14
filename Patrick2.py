@@ -6,8 +6,25 @@ root.title("Keroro Face")
 c = Canvas(root, width=500, height=500, bg='#20C5E1')
 c.pack()
 c.check =True
+c.body_color = "#FA9AA3"
 # ================================= Function ต่างๆ ========================================
+# ===== กระพริบตา =====
+def toggle_eyes():
+    current_color = c.itemcget(eye_left, 'fill')
+    new_color = c.body_color if current_color == 'white' else 'white'
+    current_state = c.itemcget(pupil_left, 'state')
+    new_state = NORMAL if current_state == HIDDEN else HIDDEN
+    c.itemconfigure(pupil_left, state=new_state)
+    c.itemconfigure(pupil_left1, state=new_state)
+    c.itemconfigure(pupil_right, state=new_state)
+    c.itemconfigure(pupil_right1, state=new_state)
+    c.itemconfigure(eye_left, fill=new_color)
+    c.itemconfigure(eye_right, fill=new_color)
 
+def blink():
+    toggle_eyes()
+    root.after(250, toggle_eyes)
+    root.after(2500, blink) #ทุกๆ 2.5 วิ
 
 # ================================= Background ========================================
 # ===== ชั้นบรรยากาศชั้นกลาง =====
@@ -324,37 +341,37 @@ c.create_polygon(
 )
 # ================================= Eyes ========================================
 # ===== Eye Left =====
-c.create_oval(
+eye_left = c.create_oval(
     210,130,240,170,
     #250,130,280,170,
 
     fill="white", outline="black", width=2
 )
 # ===== Eye Left Ball =====
-c.create_oval(
+pupil_left = c.create_oval(
     220,142,230,158,
 
     fill="black", outline="black"
 )
-c.create_oval(
+pupil_left1 = c.create_oval(
     224,144,228,150,
     fill="white"
 )
 
 
 # ===== Eye Right =====
-c.create_oval(
+eye_right = c.create_oval(
     240,130,270,170,
 
     fill="white", outline="black", width=2
 )
 # ===== Eye Right Ball =====
-c.create_oval(
+pupil_right = c.create_oval(
     250,142,260,158,
 
     fill="black", outline="black"
 )
-c.create_oval(
+pupil_right1 = c.create_oval(
     254,144,258,150,
     fill="white"
 )
@@ -421,5 +438,5 @@ for y in range(0, 501, 100):
     c.create_line(0, y, 500, y, fill="blue")
 """
 
-
+root.after(1000, blink)
 root.mainloop()
