@@ -8,7 +8,8 @@ c.pack()
 c.check =True
 c.body_color = "#FA9AA3"
 # ================================= Function ต่างๆ ========================================
-"""# ===== กระพริบตา =====
+# ===== กระพริบตา =====
+
 def toggle_eyes():
     current_color = c.itemcget(eye_left, 'fill')
     new_color = c.body_color if current_color == 'white' else 'white'
@@ -25,10 +26,10 @@ def blink():
     toggle_eyes()
     root.after(250, toggle_eyes)
     root.after(2500, blink)
-"""
+
 
 # ===== ดีใจ (เอาเม้าเข้า) =====
-"""def show_happy(event):
+def show_happy(event):
     if (200 <= event.x and event.x <= 300) and (50 <= event.y and event.y <= 220) :
         c.itemconfigure(devil_smile, state=NORMAL)
 
@@ -58,7 +59,7 @@ def blink():
         c.itemconfigure(tear_left, state=HIDDEN)
         c.itemconfigure(tear_right, state=HIDDEN)
         c.happy_level = 6
-    return"""
+    return
 
 # ===== ซ่อนดีใจ (เอาเม้าออก) =====
 def hide_happy(event):
@@ -115,6 +116,63 @@ def sad():
     else:
         c.happy_level -= 3
     root.after(1500, sad)
+
+def toggle_happy():
+    if not c.happy_show:
+        c.itemconfigure(normal_body, state=HIDDEN)
+
+        c.itemconfigure(normal_smile, state=HIDDEN) 
+        c.itemconfigure(normal_smile1, state=HIDDEN)
+
+        c.itemconfigure(sad_smile, state=HIDDEN)
+        c.itemconfigure(sad_smile_left1, state=HIDDEN)
+        c.itemconfigure(sad_smile_left2, state=HIDDEN)
+        c.itemconfigure(sad_smile_right1, state=HIDDEN)
+        c.itemconfigure(sad_smile_right2, state=HIDDEN)
+        c.itemconfigure(eyebrow_sad_left1, state=HIDDEN)
+        c.itemconfigure(eyebrow_sad_left2, state=HIDDEN)
+        c.itemconfigure(eyebrow_sad_right1, state=HIDDEN)
+        c.itemconfigure(eyebrow_sad_right2, state=HIDDEN)
+        c.itemconfigure(tear_left, state=HIDDEN)
+        c.itemconfigure(tear_right, state=HIDDEN)
+
+        c.itemconfigure(happy_body, state=NORMAL)
+
+        c.itemconfigure(happy_smile, state=NORMAL)
+        c.itemconfigure(happy_smile1, state=NORMAL)
+        c.happy_show = True
+    else:
+        c.itemconfigure(normal_body, state=NORMAL)
+
+        c.itemconfigure(normal_smile, state=NORMAL) 
+        c.itemconfigure(normal_smile1, state=NORMAL)
+
+        c.itemconfigure(happy_body, state=HIDDEN)
+
+        c.itemconfigure(happy_smile, state=HIDDEN)
+        c.itemconfigure(happy_smile1, state=HIDDEN)
+
+        c.happy_show = False
+
+
+def toggle_tongue():
+    if not c.tongue_show:
+        c.itemconfigure(tongue, state=NORMAL)
+        c.itemconfigure(tongue_line, state=NORMAL)
+        c.tongue_show = True
+    else:
+        c.itemconfigure(tongue, state=HIDDEN)
+        c.itemconfigure(tongue_line, state=HIDDEN)
+        c.tongue_show = False
+
+def happy(event):
+    toggle_tongue()
+    toggle_happy()
+    hide_happy(event)
+    root.after(1100, toggle_tongue)
+    root.after(1100, toggle_happy)
+    c.happy_level = 6
+    return
 
 # ================================= Background ========================================
 # ===== ชั้นบรรยากาศชั้นกลาง =====
@@ -203,8 +261,8 @@ c.create_line(
 
 
 # ======================================== Body ===============================================
-# ================ Normal Body ================ state = HIDDEN
-c.create_polygon(
+# ================ Normal Body ================
+normal_body = c.create_polygon(
     285,25,
     220,120,
     190,230,
@@ -232,11 +290,11 @@ c.create_polygon(
     315,225,
     300,140,
 
-    fill="#FA9AA3", smooth = 1,outline="#FD341F", width=2 , state = HIDDEN
+    fill="#FA9AA3", smooth = 1,outline="#FD341F", width=2 , 
 )
 
-# ================ Happy Body ================
-c.create_polygon(
+# ================ Happy Body ================ state=HIDDEN
+happy_body = c.create_polygon(
     285,25,
     220,120,
     190,250,
@@ -273,7 +331,7 @@ c.create_polygon(
     315,240,
     300,140,
 
-    fill="#FA9AA3", smooth = 1,outline="#FD341F", width=2
+    fill="#FA9AA3", smooth = 1,outline="#FD341F", width=2 , state=HIDDEN
 )
 
 # ===== สะดือ =====
@@ -453,7 +511,7 @@ tear_right = c.create_polygon(
 # ================================= Mouth ===============================================
 # ================ Normal Smile ================ 
 normal_smile = c.create_line(
-    215,210,
+    220,210,
     240,230,
     270,190,
     fill="black", smooth = 1, width=2,capstyle='round' , 
@@ -463,7 +521,7 @@ normal_smile1 = c.create_line(
     270,190,
     275,190,
 
-    fill="black", smooth = 1, width=2,capstyle='round' ,
+    fill="black", smooth = 1, width=2,capstyle='round' , 
 )
 # ================ Devil Smile ================ state = HIDDEN
 devil_smile = c.create_polygon(
@@ -486,7 +544,7 @@ sad_smile = c.create_line(
     210,200,
 
     225,205,
-                    #240,180,    #Middle
+
     230,190,
 
     240,200,    #middle
@@ -621,13 +679,14 @@ for y in range(0, 501, 100):
     c.create_line(0, y, 500, y, fill="blue")
 """
 
-#c.bind('<Motion>', show_happy)
-#c.bind('<Leave>', hide_happy)
+c.bind('<Motion>', show_happy)
+c.bind('<Leave>', hide_happy)
+c.bind('<Double-1>', happy)
 
 c.happy_level = 6
-c.eyes_crossed = False
-c.tongue_out = False
+c.happy_show = False
+c.tongue_show = False
 
-#root.after(1000, blink)
-#root.after(2000, sad)
+root.after(1000, blink)
+root.after(2000, sad)
 root.mainloop()
